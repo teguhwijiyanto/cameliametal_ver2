@@ -1,0 +1,71 @@
+@extends('templates.default')
+
+@section('content')
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    @include('templates.partials.alerts')
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Supplier List</h3>
+                        </div>
+                        <div class="card-body">
+                            <a href="{{route('admin.supplier.create')}}" class="btn btn-primary">Add Supplier</a>         
+                        </div>
+                        <div class="card-body">
+                            <table id="dataTable" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Grade</th>
+                                        <th>Diameter (mm)</th>
+                                        <th>Qty (Kg)</th>
+                                        <th>Qty (Coil)</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div> 
+                    </div>          
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->   
+    <form action="" method="POST" id="deleteForm">
+        @csrf
+        @method("DELETE")
+        <input type="submit" value="Delete" style="display:none">
+    </form>
+@endsection
+
+@push('scripts')
+<script>
+    $(function () {
+      $('#dataTable').DataTable({
+        processing:true,
+        serverSide:true,
+        ajax:'{{route('admin.supplier.data')}}',
+        columns:[
+            {data:'DT_RowIndex',orderable:false, searchable:false},
+            {data:'name'},
+            {data:'grade'},
+            {data:'diameter'},
+            {data:'qty_kg'},
+            {data:'qty_coil'},
+            {data:'action'}
+        ],
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+      });
+    });
+</script>
+@endpush

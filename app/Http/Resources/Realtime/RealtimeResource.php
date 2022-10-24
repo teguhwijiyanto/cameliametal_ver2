@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Http\Resources\Realtime;
+
+use App\Models\Realtime;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class RealtimeResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     */
+    public function toArray($request)
+    {
+        return [
+            'actual_qty_production'            => call_user_func(function()
+            {
+                $actual_qty_production = Realtime::select('counter')->where('workorder_id',$this->workorder->id)
+                            ->orderBy('created_at', 'desc')->first();
+                if(!$actual_qty_production)
+                {
+                    return 0;                
+				}
+                return $actual_qty_production;
+            })
+//SELECT counter as actual_qty_production FROM `realtimes` where workorder_id=1 order by created_at desc limit 0,1;
+		];
+    }
+}

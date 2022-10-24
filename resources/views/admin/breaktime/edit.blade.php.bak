@@ -1,0 +1,41 @@
+@extends('templates.default')
+@section('content')
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Edit Break</h3>
+                        </div>
+                        <div class="card-body">
+                            <form action="{{route('admin.break.update',$break)}}" method="POST">
+                                @csrf
+                                @method("PUT")
+                                <div class="form-group">
+                                    <label for="">From</label>
+                                    <input name="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder="From" value="{{old('name') ?? $break->name}}">
+                                    @error('name')
+                                        <span class="text-danger help-block">{{$message}}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="">To</label>
+                                    <input name="name2" type="text" class="form-control @error('name2') is-invalid @enderror" placeholder="To" value="{{old('name') ?? $break->name2}}">
+                                    @error('name')
+                                        <span class="text-danger help-block">{{$message}}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <input value="Edit" type="submit" class="btn btn-primary">
+                                </div>
+                            </form>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->  
+@endsection
