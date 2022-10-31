@@ -27,6 +27,7 @@ class CreateWorkordersTable extends Migration
             $table->double('fg_size_1',15,2);
             $table->double('fg_size_2',15,2);
             $table->double('tolerance_minus',15,2);
+			$table->double('tolerance_plus',15,2);
             $table->double('fg_reduction_rate',15,2);
             $table->string('fg_shape');
             $table->bigInteger('fg_qty_kg');
@@ -35,6 +36,8 @@ class CreateWorkordersTable extends Migration
             // $table->boolean('status_prod');
             $table->enum('status_wo',['draft','waiting','on process','closed'])->default('draft');
             // $table->boolean('status_smelting');
+			$table->string('chamfer');
+			$table->string('color');
             $table->unsignedBigInteger('machine_id');
             $table->unsignedBigInteger('user_id');
             $table->string('remarks')->nullable();

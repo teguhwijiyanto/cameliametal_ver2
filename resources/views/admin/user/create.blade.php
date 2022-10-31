@@ -32,7 +32,9 @@
                                         <option disabled selected value> -- select role -- </option>
                                         <option value="super-admin">Super Admin</option>
                                         <option value="office-admin">Office Admin</option>  
-                                        <option value="operator">Operator</option>  
+                                        <option value="operator">Operator</option>
+										<option value="supervisor">Supervisor</option>  
+                                        <option value="warehouse">Warehouse</option>
                                     </select>
                                     @error('role')
                                         <span class="text-danger help-block">{{$message}}</span>

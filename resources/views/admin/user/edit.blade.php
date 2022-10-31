@@ -42,7 +42,15 @@
                                         <option value="operator"
                                         @if ($role == 'operator')
                                             selected
-                                        @endif>Operator</option>  
+                                        @endif>Operator</option>
+										<option value="supervisor"
+                                        @if ($role == 'supervisor')
+                                            selected
+                                        @endif>Supervisor</option>
+										<option value="warehouse"
+                                        @if ($role == 'warehouse')
+                                            selected
+                                        @endif>Warehouse</option>
                                     </select>
                                     @error('role')
                                         <span class="text-danger help-block">{{$message}}</span>

@@ -49,12 +49,41 @@ class BreaktimeController extends Controller
     public function store(BreaktimeRequest $request)
     {
         //
+		/*
         $supplier = Breaktime::create([
             'name'  => $request->name,
 			'name2'  => $request->name2,
         ]);
+		*/
 
-        return redirect()->route('admin.breaktime.index')->with('success','Data Added Successfully');
+        if(preg_match("/([0-9]+):([0-5][0-9]):([0-5][0-9])/", $request->name)) {
+            //return redirect()->route('admin.breaktime.index')->with('success','Data Added Successfully');
+
+			if(preg_match("/([0-9]+):([0-5][0-9]):([0-5][0-9])/", $request->name2)) {
+		        $supplier = Breaktime::create([
+                'name'  => $request->name,
+			    'name2'  => $request->name2,
+                ]);
+				return redirect()->route('admin.breaktime.index')->with('success','Data Added Successfully');
+			}
+			else {
+				return redirect()->route('admin.breaktime.index')->with('success','ERROR!. Input FROM & TO should be in HH::MM:SS format! ');
+			}
+
+		}
+		else {
+            return redirect()->route('admin.breaktime.index')->with('success','ERROR!. Input FROM & TO should be in HH::MM:SS format! ');
+		}
+
+		//return redirect()->route('admin.breaktime.index')->with('success','Error. Input should be in HH::MM:SS formtted ');
+
+        //return redirect()->route('admin.breaktime.index')->with('success','Data Added Successfully');
+		/*
+		if(!$supplier) {
+            return redirect()->route('admin.breaktime.index')->with('danger','Error. Input should be in HH::MM:SS formtted ');
+		}
+		*/
+
     }
 
     /**
