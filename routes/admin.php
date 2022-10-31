@@ -22,7 +22,7 @@ Route::middleware(['verified'])->group(function(){
     Route::get('supplier/data',[DataController::class,'suppliers'])->name('supplier.data');
     Route::get('holiday/data',[DataController::class,'holidays'])->name('holiday.data');
     Route::get('breaktime/data',[DataController::class,'breaktimes'])->name('breaktime.data');
-    Route::get('color/data',[DataController::class,'color'])->name('color.data');
+    Route::get('color/data',[DataController::class,'colors'])->name('color.data');
     Route::get('line/data',[DataController::class,'lines'])->name('line.data');
     Route::get('machine/data',[DataController::class,'machines'])->name('machine.data');
     Route::get('customer/data',[DataController::class,'customers'])->name('customer.data');
@@ -76,6 +76,11 @@ Route::middleware(['verified'])->group(function(){
 Route::middleware(['verified'])->group(function(){
     Route::post('customer/getCustomerData',[CustomerController::class,'getCustomerData'])->name('customer.getCustomerData');
     Route::resource('customer','CustomerController');
+});
+
+Route::middleware(['verified'])->group(function(){
+    Route::post('color/getColorData',[ColorController::class,'getColorData'])->name('color.getColorData');
+    Route::resource('color','ColorController');
 });
 
 

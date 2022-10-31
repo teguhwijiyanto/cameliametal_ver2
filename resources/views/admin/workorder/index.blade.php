@@ -32,7 +32,8 @@
                                         <th>Customer</th>
                                         <th>Straightness Std (mm)</th>
                                         <th>Size (mm x mm)</th>
-                                        <th>Tolerance (mm)</th>
+                                        <th>Tolerance (-mm)</th>
+										<th>Tolerance (+mm)</th>
                                         <th>Reduction Rate (%)</th>
                                         <th>Shape</th>
                                         <th>Kg per bundle (kg)</th>
@@ -74,7 +75,8 @@
                                         <th>Customer</th>
                                         <th>Straightness Std (mm)</th>
                                         <th>Size (mm x mm)</th>
-                                        <th>Tolerance (mm)</th>
+                                        <th>Tolerance (-mm)</th>
+										<th>Tolerance (+mm)</th>
                                         <th>Reduction Rate (%)</th>
                                         <th>Shape</th>
                                         <th>Kg per bundle (kg)</th>
@@ -113,7 +115,8 @@
                                         <th>FG Customer</th>
                                         <th>FG Straightness Std (mm)</th>
                                         <th>FG Size (mm x mm)</th>
-                                        <th>FG Tolerance (mm)</th>
+                                        <th>Tolerance (-mm)</th>
+										<th>Tolerance (+mm)</th>
                                         <th>FG Reduction Rate (%)</th>
                                         <th>FG Shape</th>
                                         <th>FG Kg per bundle (Kg)</th>
@@ -159,6 +162,7 @@
                 {data:'straightness_standard'},
                 {data:'fg_size_combine'},
                 {data:'tolerance'},
+				{data:'tolerance_plus'},
                 {data:'fg_reduction_rate'},
                 {data:'fg_shape'},
                 {data:'fg_qty_kg'},
@@ -195,6 +199,7 @@
                 {data:'straightness_standard'},
                 {data:'fg_size_combine'},
                 {data:'tolerance'},
+				{data:'tolerance_plus'},
                 {data:'fg_reduction_rate'},
                 {data:'fg_shape'},
                 {data:'fg_qty_kg'},
@@ -266,6 +271,7 @@
                 {data:'straightness_standard'},
                 {data:'fg_size_combine'},
                 {data:'tolerance'},
+				{data:'tolerance_plus'},
                 {data:'fg_reduction_rate'},
                 {data:'fg_shape'},
                 {data:'fg_qty_kg'},

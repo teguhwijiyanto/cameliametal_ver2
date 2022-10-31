@@ -142,6 +142,13 @@
                                         <span class="text-danger help-block">{{$message}}</span>
                                     @enderror
                                 </div>
+								<div class="form-group">
+                                    <label for="">Tolerance (+mm) </label>
+                                    <input id="customer-tolerance-plus" name="tolerance_plus" type="text" class="form-control @error('tolerance_plus') is-invalid @enderror" placeholder="Tolerance (+mm)" value="{{$workorder->tolerance_plus ?? old('tolerance_plus')}}">
+                                    @error('tolerance_plus')
+                                        <span class="text-danger help-block">{{$message}}</span>
+                                    @enderror
+                                </div>
                                 <div class="form-group">
                                     <label for="">Reduction Rate</label>
                                     <input id="customer-reduc-rate" name="fg_reduction_rate" type="text" class="form-control @error('fg_reduction_rate') is-invalid @enderror" placeholder="(Finish Good) Reduction Rate" value="{{$workorder->fg_reduction_rate ?? old('fg_reduction_rate')}}">
@@ -373,6 +380,53 @@
                     return 1.6;
                 }
             }
+
+            function addTolerancePlus(diameter=0)
+            {
+                var shape = $('#customer-shape').val();
+                if(diameter>3.01 && diameter < 6.00)
+                {
+                    if(shape == "Round")
+                    {
+                        return 0.00;
+                    }
+                    return 0.00;
+                }
+                if(diameter>6.01 && diameter < 10.00)
+                {
+                    if(shape == "Round")
+                    {
+                        return 0.00;
+                    }
+                    return 0.00;
+                }
+                if(diameter>10.01 && diameter < 18.00)
+                {
+                    if(shape == "Round")
+                    {
+                        return 0.00;
+                    }
+                    return 0.00;
+                }
+                if(diameter>18.01 && diameter < 30.00)
+                {
+                    if(shape == "Round")
+                    {
+                        return 0.00;
+                    }
+                    return 0.00;
+                }
+                if(diameter>30.01 && diameter < 40.00)
+                {
+                    if(shape == "Round")
+                    {
+                        return 0.00;
+                    }
+                    return 0.00;
+                }
+            }
+
+
         });
 
     </script>

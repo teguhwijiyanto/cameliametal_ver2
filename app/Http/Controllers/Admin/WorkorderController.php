@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
+use App\Models\Color;
 use App\Models\Machine;
 use App\Models\Product;
 use App\Models\Customer;
@@ -63,6 +64,7 @@ class WorkorderController extends Controller
         return view('admin.workorder.create',[
             'wo_num'        => 'WO/'.date("Y")."/".$woOrder,
             'title'         => 'Admin: Create Workorder',
+			'colors'        => Color::get(),
             'machines'      => Machine::orderBy('name','asc')->get(),
             'suppliers'     => Supplier::get(),
             'customers'     => Customer::get()
@@ -133,6 +135,7 @@ class WorkorderController extends Controller
         return view('admin.workorder.edit',[
             'title'         => 'Admin: edit Workorder',
             'workorder'     => $workorder,
+			'colors'        => Color::get(),
             'machines'      => Machine::orderBy('name','asc')->get(),
             'suppliers'     => Supplier::get(),
             'customers'     => Customer::get()
@@ -174,6 +177,8 @@ class WorkorderController extends Controller
             // 'status_wo'             => '0',
             // 'status_smelting'       => '0',
             'user_id'               =>Auth::user()->id,
+			'chamfer'            =>$request->chamfer,
+			'color'              =>$request->color,
             'machine_id'            =>$request->machine_id,
             'remarks'               =>$request->remarks
         ]);

@@ -15,8 +15,8 @@ class CreateBreaktimesTable extends Migration
     {
         Schema::create('breaktimes', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('name2')->unique();
+            $table->time('name')->unique();
+            $table->time('name2')->unique();
             $table->timestamps();
         });
     }
