@@ -196,7 +196,7 @@
                                 </div>
 
 
-                                <div class="form-group">
+                                <div class="form-group"> 
                                     <label for="">Chamfer</label>
 									<br>
                                     <input type="radio" id="Chamfer_Yes" name="chamfer" value="Yes"

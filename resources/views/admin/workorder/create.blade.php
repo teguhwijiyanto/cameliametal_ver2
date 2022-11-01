@@ -20,7 +20,7 @@
                                     @enderror
                                 </div>
                                 <div class="alert alert-primary text-center" role="alert">
-                                    Bahan Baku
+                                    Bahan Baku 
                                 </div>
                                 <div class="form-group">
                                     <label for="">Supplier</label>

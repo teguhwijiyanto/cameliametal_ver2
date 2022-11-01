@@ -38,3 +38,4 @@ class CreateSmeltingsTable extends Migration
         Schema::dropIfExists('smeltings');
     }
 }
+ 

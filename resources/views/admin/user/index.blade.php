@@ -21,7 +21,6 @@
                                         <th>Id</th>
                                         <th>Name</th>
                                         <th>Employee ID</th>
-										<th>Role</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -55,7 +54,6 @@
             {data:'DT_RowIndex',orderable:false, searchable:false},
             {data:'name'},
             {data:'employeeId'},
-			{data:'employeeId'},
             {data:'action'}
         ],
         "paging": true,
