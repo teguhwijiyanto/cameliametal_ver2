@@ -103,7 +103,7 @@ class UserController extends Controller
     {
         //
         $user->update($request->only(['name','employeeId','role']));
-
+        $user->syncRoles([$request->role]);
         return redirect()->route('admin.user.index')->with('success','Data Updated Successfully');
     }
 

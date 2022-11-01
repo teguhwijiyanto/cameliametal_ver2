@@ -26,6 +26,9 @@ class DataController extends Controller
     {
         $users = User::query();
         return datatables()->of($users)
+			    ->addColumn('role',function(User $user){
+                    return $user->roles->pluck('name')[0];
+                })
                 ->addColumn('action','admin.user.action')
                 ->addIndexColumn()
                 ->toJson();
