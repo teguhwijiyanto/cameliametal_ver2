@@ -19,7 +19,7 @@ class CreateSmeltingsTable extends Migration
             $table->bigInteger('bundle_num');
             $table->bigInteger('weight');
             $table->string('smelting_num');
-            // $table->string('area');
+            $table->string('area');
             $table->timestamps();
 
             $table->foreign('workorder_id')->references('id')->on('workorders')

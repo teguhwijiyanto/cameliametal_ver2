@@ -195,6 +195,45 @@
                                     @enderror
                                 </div>
 
+
+                                <div class="form-group">
+                                    <label for="">Chamfer</label>
+									<br>
+                                    <input type="radio" id="Chamfer_Yes" name="chamfer" value="Yes"
+									    @if ($workorder->chamfer == 'Yes')
+                                            checked
+                                        @endif
+									> Yes
+									<br>
+									<input type="radio" id="Chamfer_No" name="chamfer" value="No"
+									    @if ($workorder->chamfer == 'No')
+                                            checked
+                                        @endif									
+									> No
+									<br>
+									<input type="radio" id="Chamfer_Satu_Sisi" name="chamfer" value="Satu Sisi"
+									    @if ($workorder->chamfer == 'Satu Sisi')
+                                            checked
+                                        @endif
+									> Satu Sisi
+                                    @error('chamfer')
+                                        <span class="text-danger help-block">{{$message}}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Color</label>
+                                    <select id="color-cmbbx" name="color" class="form-control @error('color') is-invalid @enderror" value="{{old('color')}}">
+                                        <option selected value="{{$workorder->color}}">{{$workorder->color}}</option>
+                                        @foreach ($colors as $color)
+                                            <option value="{{$color->name}}">{{$color->name}}</option>  
+                                        @endforeach
+                                    </select>
+                                    @error('color')
+                                        <span class="text-danger help-block">{{$message}}</span>
+                                    @enderror
+                                </div>
+
                                 <div class="form-group">
                                     <label for="">Machine</label>
                                     <select name="machine_id" class="form-control" id="">

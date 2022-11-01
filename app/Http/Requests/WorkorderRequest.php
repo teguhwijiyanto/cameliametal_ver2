@@ -42,10 +42,13 @@ class WorkorderRequest extends FormRequest
             'fg_size_1'             =>['required','numeric'],
             'fg_size_2'             =>['required','numeric'],
             'tolerance_minus'       =>['required','numeric'],
+		    'tolerance_plus'        =>['required','numeric'],
             'fg_reduction_rate'     =>['required','numeric'],
             'fg_shape'              =>['required'],
             'fg_qty_kg'             =>['required','numeric'],
             'fg_qty_pcs'            =>['required','numeric'], 
+			'chamfer'               =>['required'],
+			'color'                 =>['required'],
             'machine_id'            =>['required'],
         ];
     }
