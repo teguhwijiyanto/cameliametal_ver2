@@ -113,7 +113,7 @@ class WorkorderController extends Controller
         return redirect()->route('admin.workorder.index')->with('success','Data Added Successfully');
     }
 
-    /**
+    /** 
      * Display the specified resource.
      *
      * @param  int  $id
