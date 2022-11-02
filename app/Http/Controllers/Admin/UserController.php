@@ -100,9 +100,11 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(UserRequest $request, User $user)
-    {
+    {   
         //
         $user->update($request->only(['name','employeeId','role']));
+
+        $user->syncRoles($request->role);
 
         return redirect()->route('admin.user.index')->with('success','Data Updated Successfully');
     }

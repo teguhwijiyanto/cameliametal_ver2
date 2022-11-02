@@ -34,7 +34,7 @@ class CreateWorkordersTable extends Migration
             $table->bigInteger('fg_qty_pcs');
             $table->bigInteger('wo_order_num')->nullable();
             // $table->boolean('status_prod');
-            $table->enum('status_wo',['draft','waiting','on process','closed'])->default('draft');
+            $table->enum('status_wo',['draft','waiting','on check','on process','closed'])->default('draft');
             // $table->boolean('status_smelting');
 			$table->string('chamfer');
 			$table->string('color');

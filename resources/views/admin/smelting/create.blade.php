@@ -126,9 +126,9 @@
     $('#smelt-num').on('keyup',function(){
         newTest.smelting_num = $(this).val();
     });
-    // $('#smelt-area').on('keyup',function(){
-    //     newTest.area = $(this).val();
-    // });
+    $('#smelt-area').on('keyup',function(){
+        newTest.area = $(this).val();
+    });
     $('#create-smelt').on('click', function(event){
         event.preventDefault();
 		if(newTest.wo_id == null || newTest.weight == null || newTest.smelting_num == null){
@@ -137,7 +137,7 @@
 			addRow(newTest)
 			$('#smelt-weight').val('');
 			$('#smelt-num').val('');
-			// $('#selt-area').val('');
+			$('#selt-area').val('');
 		}
 	});
 
@@ -150,7 +150,7 @@
                 wo_id:obj.wo_id,
                 weight:obj.weight,
                 smelting_num:obj.smelting_num,
-                // area:obj.area,
+                area:obj.area,
                 _token: '{{csrf_token()}}'
             },
             success: function(response) {
@@ -202,7 +202,7 @@
                 $('#alert_coil_number').removeClass("alert-success").addClass("alert-warning");
                 $('#smelt-weight').attr('readonly',false);
                 $('#smelt-num').attr('readonly',false);
-                // $('#smelt-area').attr('readonly',false);
+                $('#smelt-area').attr('readonly',false);
                 $('#create-smelt').prop('disabled',false);
 
             }

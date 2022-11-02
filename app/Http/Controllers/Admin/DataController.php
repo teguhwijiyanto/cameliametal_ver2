@@ -26,6 +26,29 @@ class DataController extends Controller
     {
         $users = User::query();
         return datatables()->of($users)
+                ->addColumn('role',function(User $model){
+                    if($model->hasRole('office-admin'))
+                    {
+                        return 'office-admin';
+                    }
+                    if($model->hasRole('operator'))
+                    {
+                        return 'operator';
+                    }
+                    if($model->hasRole('super-admin'))
+                    {
+                        return 'super-admin';
+                    }
+                    if($model->hasRole('supervisor'))
+                    {
+                        return 'supervisor';
+                    }
+                    if($model->hasRole('warehouse'))
+                    {
+                        return 'warehouse';
+                    }
+                    return 'undefined';
+                })
                 ->addColumn('action','admin.user.action')
                 ->addIndexColumn()
                 ->toJson();

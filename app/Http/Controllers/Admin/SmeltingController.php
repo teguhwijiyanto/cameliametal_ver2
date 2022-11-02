@@ -55,7 +55,6 @@ class SmeltingController extends Controller
                 break;  
             }
         }
-        
 
         Smelting::create([
             'bundle_num'        =>$bundleNum,

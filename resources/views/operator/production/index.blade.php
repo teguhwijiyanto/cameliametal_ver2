@@ -506,7 +506,7 @@
                 }
                 if(data[index].is_remark_filled == true){
                     cardOpeningDiv = '<div class="card card-success collapsed-card">';
-                    dtTime = '<h3 class="card-title">' + data[index].start_time + ' - '+ data[index].end_time +' '+ data[index].downtime_reason +'ooo</h3>';
+                    dtTime = '<h3 class="card-title">' + data[index].start_time + ' - '+ data[index].end_time +' '+ data[index].downtime_reason +'</h3>';
                     downtimeListBody = '';
                 }
                 downtimeList += cardOpeningDiv +
