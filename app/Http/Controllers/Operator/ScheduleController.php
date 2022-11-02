@@ -295,7 +295,7 @@ class ScheduleController extends Controller
         return redirect(route('workorder.index'));
     }
 
-    /**
+    /** 
      * Show the form for editing the specified resource.
      *
      * @param  int  $id

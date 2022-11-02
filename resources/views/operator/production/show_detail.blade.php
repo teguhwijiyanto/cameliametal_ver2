@@ -10,7 +10,7 @@
                         <div class="col-md-12">
                             <div class="card card-primary card-outline">
                                 <div class="card-header">
-                                    <h5 class="card-title">Performance Report</h5>
+                                    <h5 class="card-title">Performance Report </h5>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                             <i class="fas fa-minus"></i>

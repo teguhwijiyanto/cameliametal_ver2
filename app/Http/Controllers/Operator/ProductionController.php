@@ -240,7 +240,7 @@ $pcs_per_bundles = Production::select('pcs_per_bundle')->where('workorder_id',$w
         {
             $total_good_product += $pcs_per_bund->pcs_per_bundle;
         }
-
+ 
 
 		return view('operator.production.show_detail',[
             'title'                 => 'Production Report',

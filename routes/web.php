@@ -90,7 +90,7 @@ Route::middleware(['verified'])->group(function(){
     Route::post('/operator/production/getProductionInfo',[ProductionController::class,'getProductionInfo'])->name('production.getProductionInfo');
 });
 
-
+ 
 
 //
 // Production Controller Route
