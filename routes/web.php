@@ -74,7 +74,8 @@ Route::middleware(['verified'])->group(function(){
     Route::post('/operator/schedule/{id}/process',[ScheduleController::class,'process']);
 	Route::post('/operator/schedule/{id}/check',[ScheduleController::class,'check']);
     Route::get('/operator/showWaiting',[ScheduleController::class,'showWaiting'])->name('workorder.showWaiting');
-    Route::get('/operator/showOnProcess',[ScheduleController::class,'showOnProcess'])->name('workorder.showOnProcess');
+    //Route::get('/operator/showOnProcess',[ScheduleController::class,'showOnProcess'])->name('workorder.showOnProcess');
+	Route::get('/operator/showOnProcess',[ScheduleController::class,'showOnProcess_2'])->name('workorder.showOnProcess');
 	Route::get('/operator/showOnCheck',[ScheduleController::class,'showOnCheck'])->name('workorder.showOnCheck');
 });
 
@@ -101,6 +102,8 @@ Route::middleware(['verified'])->group(function(){
    Route::post('/supervisor/production/{id}/finish',[ProductionController::class,'finish'])->name('spvproduction.finish');
 	Route::post('/supervisor/schedule/{id}/finish',[ScheduleController::class,'finish'])->name('spvschedule.finish');
 	Route::get('/supervisor/production/show_details',[ProductionController::class,'spvshow'])->name('supervisor.production.show_details');
+	Route::get('/operator/production/show_details',[ProductionController::class,'oprshow'])->name('operator.production.show_details');
+	Route::post('/operator/schedule/{id}/check',[ScheduleController::class,'check'])->name('oprschedule.check');
 });
 
 

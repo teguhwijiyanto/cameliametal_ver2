@@ -176,6 +176,54 @@ class ScheduleController extends Controller
     }
 
 
+
+    public function showOnProcess_2()
+    {
+        $workorders = Workorder::where('status_wo','on process')->orderBy('wo_order_num','ASC');
+        return datatables()->of($workorders)
+            ->addColumn('bb_qty_combine',function(Workorder $model){
+                $combines = $model->bb_qty_pcs . " / " . $model->bb_qty_coil;
+                return $combines;
+            })
+            ->addColumn('fg_size_combine',function(Workorder $model){
+                $combines = $model->fg_size_1 . " / " . $model->fg_size_2;
+                return $combines;
+            })
+            // ->addColumn('status_prod',function(Workorder $model){
+            //     $combines = $model->status_prod;
+            //     if($combines){
+            //         return 'On Process';
+            //     }
+            //     return 'Waiting';
+            // })
+            // ->addColumn('status_wo',function(Workorder $model){
+            //     $combines = $model->status_wo;
+            //     if($combines){
+            //         return 'Closed';
+            //     }
+            //     return 'Open';
+            // })
+            ->addColumn('tolerance',function(Workorder $model){
+                $combines = '-' . $model->tolerance_minus;
+                return $combines;
+            })
+            ->addColumn('user',function(Workorder $model){
+                return $model->user->name;
+            })
+            ->addColumn('machine',function(Workorder $model){
+                return $model->machine->name;
+            })
+			->addColumn('action','operator.production.action')
+            ->setRowId(function(Workorder $model){
+                return $model->id;
+            })
+            ->addIndexColumn()
+            ->toJson();
+
+    } // public function showOnProcess_2()
+
+
+
     public function showOnCheck()
     {
         $workorders = Workorder::where('status_wo','on check')->orderBy('wo_order_num','ASC');
