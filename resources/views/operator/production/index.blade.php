@@ -1,452 +1,100 @@
 @extends('templates.default')
+
 @section('content')
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-12 col-md-12 col-lg-12 order-2 order-md-1">
-                    {{-- Production Report --}}
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card card-primary card-outline">
-                                <div class="card-header">
-                                    <h5 class="card-title">Performance Report</h5>
-                                    <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <p class="text-center">
-                                                <strong>Current Speed Performance</strong>
-                                            </p>
-                                            <div class="chart">
-                                                <canvas id="speedChart" height="180"
-                                                    style="height: 180px;"></canvas>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <p class="text-center">
-                                                <strong>Performance Indicator</strong>
-                                            </p>
-                                            <div class="progress-group">
-                                                Performance
-                                                <span class="float-right"><b>160</b>/200</span>
-                                                <div class="progress progress-sm">
-                                                    <div class="progress-bar bg-primary" style="width: 80%"></div>
-                                                </div>
-                                            </div>
+                <div class="col-12">
+                    @include('templates.partials.alerts')
 
-                                            <div class="progress-group">
-                                                Availability
-                                                <span class="float-right"><b>310</b>/400</span>
-                                                <div class="progress progress-sm">
-                                                    <div class="progress-bar bg-danger" style="width: 75%"></div>
-                                                </div>
-                                            </div>
-
-                                            <div class="progress-group">
-                                                Quality
-                                                <span class="float-right"><b>480</b>/800</span>
-                                                <div class="progress progress-sm">
-                                                    <div class="progress-bar bg-success" style="width: 60%"></div>
-                                                </div>
-                                            </div>
-
-                                            <div class="progress-group">
-                                                Overall Equipment Effectiveness
-                                                <span class="float-right"><b>250</b>/500</span>
-                                                <div class="progress progress-sm">
-                                                    <div class="progress-bar bg-warning" style="width: 50%"></div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="row">
-                                        <div class="col-sm-3 col-6">
-                                            <div class="description-block border-right">
-                                                <span class="description-text float-left">Workorder: {{$workorder->wo_number}}</span>
-                                                <br>
-                                                <span class="description-text float-left">Machine: {{$workorder->machine->name}}</span>
-                                                <br>    
-                                                <div class="dropdown-divider"></div>
-                                                <a href="#" id="workorder-details" class="descriprion-text">See More</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3 col-6">
-                                            <div class="description-block border-right">
-                                                <h5 class="description-header">{{$reports['production_count']}} pcs</h5>
-                                                <span class="description-text">TOTAL PRODUCTION</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3 col-6">
-                                            <div class="description-block border-right">
-                                                <h5 class="description-header">{{$reports['total_downtime']}} minutes</h5>
-                                                <span class="description-text">TOTAL DOWNTIME</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3 col-6">
-                                            <div class="description-block">
-                                                <h5 class="description-header">1200</h5>
-                                                <span class="description-text">TOTAL GOOD PRODUCT</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">On Process</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
                             </div>
                         </div>
+                        <div class="card-body">
+                            <table id="onprocess-table" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        {{-- <th>Order Number</th> --}}
+										<th>Machine</th>
+                                        <th>WO Number</th>
+                                        <th>BB Supplier</th>
+                                        <th>BB Grade</th>
+                                        <th>BB Diameter (mm)</th>
+                                        <th>BB Qty (Kg / Coil)</th>
+                                        <th>FG Customer</th>
+                                        <th>FG Straightness Std (mm)</th>
+                                        <th>FG Size (mm x mm)</th>
+                                        <th>FG Tolerance (mm)</th>
+                                        <th>FG Reduction Rate (%)</th>
+                                        <th>FG Shape</th>
+                                        <th>FG Kg per bundle (Kg)</th>
+                                        <th>FG Pcs per bundle (Pcs)</th>
+                                        <th>Workorder Status</th>
+                                        <th>Created By</th>
+                                        <th>Created Date</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div> 
                     </div>
-                        
-                    {{-- Production Report Column --}}
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card card-primary card-outline collapsed-card">
-                                <div class="card-header">
-                                    <div class="col-6">
-                                        <h5 class="card-title">Production Report (<i class="fas fa-check text-success"></i>)</h5> 
-                                    </div>
-                                    <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="card-body box-profile">
-                                    <label for="">Report per Bundle</label>
-                                    <ul class="nav nav-pills">
-                                        @foreach ($smeltings as $smelt)
-                                            <li class="nav-item">
-                                                <a class="btn btn-transparent smelting-number 
-                                                    @foreach ($productions as $prod)
-                                                        @if($smelt->bundle_num != $prod->bundle_num)
-                                                            @continue
-                                                        @endif
-                                                        bg-primary
-                                                    @endforeach
-                                                    "
-                                                    href="#" style="margin:1px;"
-                                                    id="{{ $smelt->bundle_num }}"
-                                                    data-toggle="tab">{{ $smelt->bundle_num }}
-                                                </a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                    <div class="dropdown-divider"></div>
-                                    @if (count($smeltingInputList) == 0)
-                                        <div class="alert alert-success text-center" role="alert">
-                                            All Data Already Input
-                                        </div>
-                                    @else
-                                        <form id="production-report" action="" method="post">
-                                            @csrf
-                                            <label id="smelting-num">
-                                                No. Leburan:
-                                            </label>
-                                            <div class="dropdown-divider"></div>
-                                            <div class="row">
-                                                <input hidden name="workorder_id" type="text"
-                                                class="form-control @error('workorder_id') is-invalid @enderror"
-                                                placeholder="No. Leburan"
-                                                value="{{ $workorder->id ?? old('workorder_id') }}">
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="">Bundle Number</label>
-                                                        <select name="bundle-num"
-                                                            class="form-control @error('bundle-num') is-invalid @enderror">
-                                                            <option value="">-- Select Bundle Number --</option>
-                                                            @foreach ($smeltingInputList as $smelt)
-                                                                <option value="{{ $smelt }}">{{ $smelt }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">Dies Number</label>
-                                                        <input type="text" name="dies-number"
-                                                            class="form-control @error('dies-number') is-invalid @enderror"
-                                                            placeholder="Dies Number" value="{{ old('dies-number') }}">
-                                                        @error('dies-number')
-                                                            <span class="text-danger help-block">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">Diameter Ujung</label>
-                                                        <input type="text" name="diameter-ujung"
-                                                            class="form-control @error('diameter-ujung') is-invalid @enderror"
-                                                            placeholder="Diameter Ujung"
-                                                            value="{{ old('diameter-ujung') }}">
-                                                        @error('diameter-ujung')
-                                                            <span class="text-danger help-block">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">Diameter Tengah</label>
-                                                        <input type="text" name="diameter-tengah"
-                                                            class="form-control @error('diameter-tengah') is-invalid @enderror"
-                                                            placeholder="Diameter Tengah"
-                                                            value="{{ old('diameter-tengah') }}">
-                                                        @error('diameter-tengah')
-                                                            <span class="text-danger help-block">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">Diameter Ekor</label>
-                                                        <input type="text" name="diameter-ekor"
-                                                            class="form-control @error('diameter-ekor') is-invalid @enderror"
-                                                            placeholder="Diameter Ekor"
-                                                            value="{{ old('diameter-ekor') }}">
-                                                        @error('diameter-ekor')
-                                                            <span class="text-danger help-block">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">Kelurusan Aktual</label>
-                                                        <input type="text" name="kelurusan-aktual"
-                                                            class="form-control @error('kelurusan-aktual') is-invalid @enderror"
-                                                            placeholder="Kelurusan Aktual"
-                                                            value="{{ old('kelurusan-aktual') }}">
-                                                        @error('kelurusan-aktual')
-                                                            <span class="text-danger help-block">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="">Panjang Aktual</label>
-                                                        <input type="text" name="panjang-aktual"
-                                                            class="form-control @error('panjang-aktual') is-invalid @enderror"
-                                                            placeholder="Panjang Aktual"
-                                                            value="{{ old('panjang-aktual') }}">
-                                                        @error('panjang-aktual')
-                                                            <span class="text-danger help-block">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">Berat Finish Good</label>
-                                                        <input type="text" name="berat-fg"
-                                                            class="form-control @error('berat-fg') is-invalid @enderror"
-                                                            placeholder="Berat Finish Good"
-                                                            value="{{ old('berat-fg') }}">
-                                                        @error('berat-fg')
-                                                            <span class="text-danger help-block">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">Pcs per Bundle</label>
-                                                        <input type="text" name="pcs-per-bundle"
-                                                            class="form-control @error('pcs-per-bundle') is-invalid @enderror"
-                                                            placeholder="Pcs Per Bundle"
-                                                            value="{{ old('pcs-per-bundle') }}">
-                                                        @error('pcs-per-bundle')
-                                                            <span class="text-danger help-block">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">Bundle Judgement</label>
-                                                        <select name="bundle-judgement" id=""
-                                                            class="form-control @error('bundle-judgement') is-invalid @enderror">
-                                                            <option value="">-- Select Judgement --</option>
-                                                            <option value="1">Good</option>
-                                                            <option value="0">Not Good</option>
-                                                        </select>
-                                                        @error('bundle-judgement')
-                                                            <span class="text-danger help-block">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="">Visual</label>
-                                                        <select name="visual" id=""
-                                                            class="form-control @error('visual') is-invalid @enderror">
-                                                            <option value="">-- Select Judgement --</option>
-                                                            <option value="1">Good</option>
-                                                            <option value="0">Not Good</option>
-                                                        </select>
-                                                        @error('visual')
-                                                            <span class="text-danger help-block">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                    <br>
-                                                    <div class="form-group">
-                                                        <div class="row">
-                                                            <button class="form-control btn btn-primary"
-                                                                    style="margin-left:200px;">Apply</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- Downtime Report --}}
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card direct-chat card-primary card-outline direct-chat-primary">
-                                <div class="card-header">
-                                    <h3 class="card-title">Downtime Report</h3>
-                                    <div class="card-tools">
-                                        <span id="downtime-list-count" class="badge badge-danger"></span>
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="direct-chat-messages"  style="height: 500px;">
-                                        <div class="direct-chat-msg">
-                                            <div class="col-12" id="downtime-list">
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-footer"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="card card-outline card-primary">
-                                <div class="card-header">
-                                    Click This Button to Check The Workorder Process
-                                </div>
-                                <div class="card-body">
-                                    <div class="text-center">
-                                        <!--<a href="#" class="btn btn-primary">Finish Workorder</a>-->
-			<form action="" method="POST" id="processForm">
-				@csrf
-				<input type="submit" value="Process" style="display:none">
-				<button href="{{url('/operator/schedule/'.$workorder->id.'/check')}}" class="btn btn-success" id="check">Check Workorder</button>
-			</form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
                 </div>
-                
             </div>
         </div><!-- /.container-fluid -->
-</section>
-
-<!-- /.content -->
+    </section>
+    <!-- /.content -->   
+    <form action="" method="POST" id="processForm">
+        @csrf
+        <input type="submit" value="Process" style="display:none">
+    </form>
 @endsection
-
+ 
 @push('scripts')
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    $(document).ready(function(){
-        updateDowntimeList();
-        updateSpeedChart();
-    });
+    $(function () {
 
-    let aChannel = Echo.channel('channel-downtime');
-    aChannel.listen('DowntimeCaptured', function(data)
-    {
-        if (data.downtime.status == 'stop') {
-            Swal.fire({
-                icon: 'info',
-                title: 'Downtime Captured',
-                showConfirmButton: false,
-                timer: 3000
-            });
-        }
-        updateDowntimeList();
-    });
-
-    let productionChannel = Echo.channel('channel-production-graph');
-    productionChannel.listen('productionGraph',function(data){
-        updateSpeedChart();
-    });
-
-
-	 $('button#check').on('click', function(e){
-	     e.preventDefault();
-	     var href = $(this).attr('href');
-	     Swal.fire({
-		title: 'Are you sure want to check this workorder?',
-		text: "You won't be able to revert this!",
-		icon: 'warning',
-		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
-		confirmButtonText: 'Yes, check it!'
-		}).then((result) => {
-		if (result.isConfirmed) {
-		    document.getElementById('processForm').action=href;
-		    document.getElementById('processForm').submit();
-		}
-	    })
-	 });
-	
-    function updateSpeedChart(){
-        $('.speed-chart').show();
-        $.ajax({
-            method:'GET',
-            url:'{{route('realtime.ajaxRequestAll')}}',
-            dataType:'json',
-            success:function(response){
-                var areaChartCanvas = $('#speedChart').get(0).getContext('2d');
-
-                var areaChartData = {
-                    labels  : response['created_at'],
-                    datasets: [
-                        {
-                        label               : 'Production Speed',
-                        backgroundColor     : 'rgba(60,141,188,0.9)',
-                        borderColor         : 'rgba(60,141,188,0.8)',
-                        pointRadius          : false,
-                        pointColor          : '#3b8bba',
-                        pointStrokeColor    : 'rgba(60,141,188,1)',
-                        pointHighlightFill  : '#fff',
-                        pointHighlightStroke: 'rgba(60,141,188,1)',
-                        data                : response['speed']
-                        },
-                    ]
-                }
-
-                var areaChartOptions = {
-                    maintainAspectRatio : false,
-                    responsive : true,
-                    legend: {
-                        display: false
-                    },
-                    scales: {
-                        xAxes: [{
-                        gridLines : {
-                            display : false,
-                        }
-                        }],
-                        yAxes: [{
-                        gridLines : {
-                            display : false,
-                        }
-                        }]
-                    }
-                }
-
-                // This will get the first returned node in the jQuery collection.
-                new Chart(areaChartCanvas, {
-                    type: 'line',
-                    data: areaChartData,
-                    options: areaChartOptions
-                })
-
-                $('.speed-chart').hide();
-            }
+        $('#onprocess-table').DataTable({
+            processing:true,
+            serverSide:true,
+            ajax:'{{route('workorder.showOnProcess')}}',
+            columns:[
+                // {data:'wo_order_num'},
+			    {data:'machine'},
+                {data:'wo_number'},
+                {data:'bb_supplier'},
+                {data:'bb_grade'},
+                {data:'bb_diameter'},
+                {data:'bb_qty_combine'},
+                {data:'fg_customer'},
+                {data:'straightness_standard'},
+                {data:'fg_size_combine'},
+                {data:'tolerance'},
+                {data:'fg_reduction_rate'},
+                {data:'fg_shape'},
+                {data:'fg_qty_kg'},
+                {data:'fg_qty_pcs'},
+                // {data:'status_prod'},
+                {data:'status_wo'},
+                {data:'user'},  
+                {data:'created_at'},
+				{data:'action'}
+            ],
+            "paging": false,
+            "lengthChange": true,
+            "searching": false,
+            "ordering": false,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
         });
+<<<<<<< HEAD
     }
 
     function updateDowntimeList()
@@ -910,6 +558,8 @@
             },
         });
 
+=======
+>>>>>>> e3fe6842971beb80616e77c4b3678eb36515d644
         
     });
 </script>

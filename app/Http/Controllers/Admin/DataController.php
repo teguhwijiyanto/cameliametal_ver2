@@ -26,6 +26,7 @@ class DataController extends Controller
     {
         $users = User::query();
         return datatables()->of($users)
+<<<<<<< HEAD
                 ->addColumn('role',function(User $model){
                     if($model->hasRole('office-admin'))
                     {
@@ -48,6 +49,10 @@ class DataController extends Controller
                         return 'warehouse';
                     }
                     return 'undefined';
+=======
+			    ->addColumn('role',function(User $user){
+                    return $user->roles->pluck('name')[0];
+>>>>>>> e3fe6842971beb80616e77c4b3678eb36515d644
                 })
                 ->addColumn('action','admin.user.action')
                 ->addIndexColumn()

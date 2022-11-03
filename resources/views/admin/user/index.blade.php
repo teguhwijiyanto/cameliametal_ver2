@@ -21,7 +21,11 @@
                                         <th>Id</th>
                                         <th>Name</th>
                                         <th>Employee ID</th>
+<<<<<<< HEAD
                                         <th>Role</th>
+=======
+										<th>Role</th>
+>>>>>>> e3fe6842971beb80616e77c4b3678eb36515d644
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -55,7 +59,11 @@
             {data:'DT_RowIndex',orderable:false, searchable:false},
             {data:'name'},
             {data:'employeeId'},
+<<<<<<< HEAD
             {data:'role'},
+=======
+			{data:"role"},
+>>>>>>> e3fe6842971beb80616e77c4b3678eb36515d644
             {data:'action'}
         ],
         "paging": true,

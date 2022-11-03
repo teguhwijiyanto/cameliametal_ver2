@@ -10,7 +10,7 @@
                         <div class="col-md-12">
                             <div class="card card-primary card-outline">
                                 <div class="card-header">
-                                    <h5 class="card-title">Performance Report</h5>
+                                    <h5 class="card-title">Performance Report </h5>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                             <i class="fas fa-minus"></i>
@@ -310,10 +310,10 @@
                                                         @enderror
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">Berat Finish Good</label>
+                                                        <label for="">Berat Check Good</label>
                                                         <input type="text" name="berat-fg"
                                                             class="form-control @error('berat-fg') is-invalid @enderror"
-                                                            placeholder="Berat Finish Good"
+                                                            placeholder="Berat Check Good"
                                                             value="{{ old('berat-fg') }}">
                                                         @error('berat-fg')
                                                             <span class="text-danger help-block">{{ $message }}</span>
@@ -400,16 +400,16 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="card card-outline card-primary">
-                                <div class="card-header" id="div_str_finish">
-                                    Click This Button to Finish The Workorder Process
+                                <div class="card-header" id="div_str_check">
+                                    Click This Button to Check The Workorder Process
                                 </div>
                                 <div class="card-body">
                                     <div class="text-center">
-                                        <!--<a href="#" class="btn btn-primary">Finish Workorder</a>-->
+                                        <!--<a href="#" class="btn btn-primary">Check Workorder</a>-->
 			<form action="" method="POST" id="processForm">
 				@csrf
 				<input type="submit" value="Process" style="display:none">
-				<button href="{{url('/supervisor/schedule/'.$workorder->id.'/finish')}}" class="btn btn-success" id="finish">Finish Workorder</button>
+				<button href="{{url('/operator/schedule/'.$workorder->id.'/check')}}" class="btn btn-success" id="check">Check Workorder</button>
 			</form>
                                     </div>
                                 </div>
@@ -618,17 +618,17 @@ var Management_Preventive_Maintenance=document.getElementById("Management_Preven
     });
 
 
-	 $('button#finish').on('click', function(e){
+	 $('button#check').on('click', function(e){
 	     e.preventDefault();
 	     var href = $(this).attr('href');
 	     Swal.fire({
-		title: 'Are you sure want to finish this workorder?',
+		title: 'Are you sure want to check this workorder?',
 		text: "You won't be able to revert this!",
 		icon: 'warning',
 		showCancelButton: true,
 		confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',
-		confirmButtonText: 'Yes, finish it!'
+		confirmButtonText: 'Yes, check it!'
 		}).then((result) => {
 		if (result.isConfirmed) {
 		    document.getElementById('processForm').action=href;
@@ -872,7 +872,7 @@ var total_good_product = '{{$total_good_product}}';
 
 var diff = 0;
 var planned_runtime = 0;
- 
+
 if(status_wo=="closed") {
     diff = Math.abs(new Date(updated_at) - new Date(created_at));
 }
@@ -919,7 +919,7 @@ oee = oee.substr(0, 4);
 $('#oee_id').html(oee);
 var oee_prcntg = oee;
 $('#oee_bar').html("<div class='progress-bar bg-warning' style='font-weight:bold; width: "+oee_prcntg+"%'></div>");
-
+ 
 
 $('#total_production_id').html("<h5 class='description-header'><b>"+actual_qty_production+"</b> pcs</h5>");
 $('#total_downtime_id').html("<h5 class='description-header'><b>"+actual_downtime_duration+"</b> minutes</h5>");
@@ -960,20 +960,20 @@ $('#total_good_product_id').html("<h5 class='description-header'><b>"+total_good
 
             var is_prod_report_complete = $('#is_prod_report_complete').val();
 			if(is_prod_report_complete==0 && is_all_remarks_filled==0) {
-				$('#div_str_finish').html("<div style='color:red;'><b>Please fill all Production Report (per Bundle) AND all Downtime Report!!</b></div>");
-				$('#finish').prop('disabled', true);
+				$('#div_str_check').html("<div style='color:red;'><b>Please fill all Production Report (per Bundle) AND all Downtime Report!!</b></div>");
+				$('#check').prop('disabled', true);
 			}
 			if(is_prod_report_complete==0 && is_all_remarks_filled==1) {
-				$('#div_str_finish').html("<div style='color:red;'><b>Please fill all Production Report (per Bundle)!!</b></div>");
-				$('#finish').prop('disabled', true);
+				$('#div_str_check').html("<div style='color:red;'><b>Please fill all Production Report (per Bundle)!!</b></div>");
+				$('#check').prop('disabled', true);
 			}
 			if(is_prod_report_complete==1 && is_all_remarks_filled==0) {
-				$('#div_str_finish').html("<div style='color:red;'><b>Please fill all Downtime Report!!</b></div>");
-				$('#finish').prop('disabled', true);
+				$('#div_str_check').html("<div style='color:red;'><b>Please fill all Downtime Report!!</b></div>");
+				$('#check').prop('disabled', true);
 			}
 			if(is_prod_report_complete==1 && is_all_remarks_filled==1) {
-				$('#div_str_finish').html("Click This Button to Finish The Workorder Process");
-				$('#finish').prop('disabled', false);
+				$('#div_str_check').html("Click This Button to Check The Workorder Process");
+				$('#check').prop('disabled', false);
 			}
 
 /*

@@ -28,7 +28,7 @@ class ProductionController extends Controller
         $workorder = Workorder::where('status_wo','on process')->first();
         if(!$workorder)
         {
-            return redirect(route('schedule.index'));
+            return redirect(route('workorder.index'));
         }
         $productions = Production::where('workorder_id',$workorder->id)->get();
         $user       = User::where('id',$workorder->user_id)->first();
@@ -65,7 +65,23 @@ class ProductionController extends Controller
             $totalDowntime += $dt->downtime;
         }
 
-        return view('operator.production.index',[
+
+        $actual_qty_production = Realtime::select('counter')->where('workorder_id',$workorder->id)
+                                 ->orderBy('created_at', 'desc')->first();
+
+        $jml_smelting = Smelting::select('id')->where('workorder_id',$workorder->id)->count();
+
+        $fg_qty_pcs  = Workorder::select('fg_qty_pcs')->where('id',$workorder->id)->get();
+
+$total_good_product = 0;
+$pcs_per_bundles = Production::select('pcs_per_bundle')->where('workorder_id',$workorder->id)->where('bundle_judgement',1)->get();  
+        foreach($pcs_per_bundles as $pcs_per_bund)
+        {
+            $total_good_product += $pcs_per_bund->pcs_per_bundle;
+        }
+
+
+		return view('operator.production.index',[
             'title'                 => 'Production Report',
             'workorder'             => $workorder,
             'createdBy'             => $user,
@@ -77,6 +93,10 @@ class ProductionController extends Controller
             ],
             'smeltingInputList'     => $smeltingInputList,
             'oee'                   => $oee,
+            'actual_qty_production' => $actual_qty_production->counter,
+            'jml_smelting'          => $jml_smelting,
+			'fg_qty_pcs'            => $fg_qty_pcs,
+			'total_good_product'    => $total_good_product,
             'downtimes'             => $downtimes
         ]);
     }
@@ -161,6 +181,87 @@ $pcs_per_bundles = Production::select('pcs_per_bundle')->where('workorder_id',$w
             'downtimes'             => $downtimes
         ]);
     }
+
+
+    public function oprshow()
+    {
+        //
+        $workorder = Workorder::where('status_wo','on process')->first();
+        if(!$workorder)
+        {
+            return redirect(route('workorder.index'));
+        }
+        $productions = Production::where('workorder_id',$workorder->id)->get();
+        $user       = User::where('id',$workorder->user_id)->first();
+        $smeltings  = Smelting::where('workorder_id',$workorder->id)->orderBy('bundle_num','ASC')->get();
+        $smeltingInputList = [];
+        foreach ($smeltings as $smelting) 
+        {
+            $productionCheck = Production::where('workorder_id',$workorder->id)->where('bundle_num',$smelting->bundle_num)->first();
+            if($productionCheck == null)
+            {
+                $smeltingInputList[] = $smelting->bundle_num;
+            }
+        }
+        $oee        = Oee::where('workorder_id',$workorder->id)->first();
+        $downtimes  = Downtime::where('is_remark_filled',false)
+                                ->where('workorder_id',$workorder->id)
+                                ->where('status','stop')
+                                ->orWhere('is_downtime_stopped',false)
+                                ->orderby('id','desc')
+                                ->get();
+        $productionCount = 0;
+        foreach($productions as $prod)
+        {
+            $productionCount += $prod->pcs_per_bundle;
+        }
+        $totalDowntime = 0;
+
+        $downtimeSummary = Downtime::where('status','run')
+                                ->orWhere('is_downtime_stopped',true)
+                                ->where('workorder_id',$workorder->id)
+                                ->get();
+        foreach($downtimeSummary as $dt)
+        {
+            $totalDowntime += $dt->downtime;
+        }
+
+
+        $actual_qty_production = Realtime::select('counter')->where('workorder_id',$workorder->id)
+                                 ->orderBy('created_at', 'desc')->first();
+
+        $jml_smelting = Smelting::select('id')->where('workorder_id',$workorder->id)->count();
+
+        $fg_qty_pcs  = Workorder::select('fg_qty_pcs')->where('id',$workorder->id)->get();
+
+$total_good_product = 0;
+$pcs_per_bundles = Production::select('pcs_per_bundle')->where('workorder_id',$workorder->id)->where('bundle_judgement',1)->get();  
+        foreach($pcs_per_bundles as $pcs_per_bund)
+        {
+            $total_good_product += $pcs_per_bund->pcs_per_bundle;
+        }
+ 
+
+		return view('operator.production.show_detail',[
+            'title'                 => 'Production Report',
+            'workorder'             => $workorder,
+            'createdBy'             => $user,
+            'smeltings'             => $smeltings,
+            'productions'           => $productions,
+            'reports'               => [
+                'production_count'  => $productionCount,
+                'total_downtime'    => $totalDowntime,
+            ],
+            'smeltingInputList'     => $smeltingInputList,
+            'oee'                   => $oee,
+            'actual_qty_production' => $actual_qty_production->counter,
+            'jml_smelting'          => $jml_smelting,
+			'fg_qty_pcs'            => $fg_qty_pcs,
+			'total_good_product'    => $total_good_product,
+            'downtimes'             => $downtimes
+        ]);
+    } // public function oprshow()
+
 
 
     public function spvshow()

@@ -294,9 +294,10 @@ Breadcrumbs::for('spvshow.show', function ($trail) {
     $trail->push('Create Color', route('admin.color.create'));
 });
 
-
-
-
 Breadcrumbs::for('supervisor.production.show_details', function ($trail) {
     $trail->push('Home', route('supervisor.production.show_details'));
+});
+ 
+Breadcrumbs::for('operator.production.show_details', function ($trail) {
+    $trail->push('Home', route('operator.production.show_details'));
 });
