@@ -878,6 +878,7 @@ if(status_wo=="closed") {
 }
 else {
     diff = Math.abs(new Date(now_datetime) - new Date(created_at));
+	//diff = Math.abs(new Date(updated_at) - new Date(created_at));
 }
 
     var planned_runtime = Math.floor((diff/1000)/60); // count diff in minutes
@@ -889,28 +890,36 @@ var performance_x = actual_qty_production / planned_qty_production * 100;
 var performance = (Math.round(performance_x * 100) / 100).toFixed(2);
 $('#performance_id').html(performance);
 var performance_prcntg = performance * 100;
-$('#performance_bar').html("<div class='progress-bar bg-primary' style='font-weight:bold; width: "+performance_prcntg+"%'></div>");
+$('#performance_bar').html("<div class='progress-bar bg-primary' style='font-weight:bold; width: "+performance+"%'></div>");
 
-var availability_x = (planned_runtime - actual_runtime) / planned_runtime * 100;
+var availability_x = actual_runtime / planned_runtime * 100;
 var availability = (Math.round(availability_x * 100) / 100).toFixed(2);
-$('#availability_id').html(availability);
+availability_x = (Math.floor(availability_x)).toFixed(2);
+$('#availability_id').html(availability_x);
 var availability_prcntg = availability * 100;
 $('#availability_bar').html("<div class='progress-bar bg-danger' style='font-weight:bold; width: "+availability_prcntg+"%'></div>");
 
 var quality_x = total_good_product / actual_qty_production * 100;
 //var quality = (Math.round(quality_x * 100) / 100).toFixed(2);
 var quality = (Math.round(quality_x) / 100).toFixed(2);
-$('#quality_id').html(quality);
+$('#quality_id').html(quality_x);
 var quality_prcntg = quality * 100;
-$('#quality_bar').html("<div class='progress-bar bg-success' style='font-weight:bold; width: "+quality_prcntg+"%'></div>");
+$('#quality_bar').html("<div class='progress-bar bg-success' style='font-weight:bold; width: "+quality_x+"%'></div>");
 
 var oee_x = performance_x * availability_x * quality_x * 100;
 //var oee = (Math.round(oee_x * 100) / 100).toFixed(2);
-var oee = (Math.round(oee_x) / 100).toFixed(2);
+//var oee = (Math.round(oee_x) / 100).toFixed(2);
+
+var oee = (performance / 100) * (availability_x / 100) * (quality_x / 100) * 100;
+//oee = (Math.round(oee)).toFixed(5);
+//let text = "Hello world!";
+oee = oee.toString();
+oee = oee.substr(0, 4);
+
 $('#oee_id').html(oee);
 var oee_prcntg = oee;
 $('#oee_bar').html("<div class='progress-bar bg-warning' style='font-weight:bold; width: "+oee_prcntg+"%'></div>");
-
+ 
 
 $('#total_production_id').html("<h5 class='description-header'><b>"+actual_qty_production+"</b> pcs</h5>");
 $('#total_downtime_id').html("<h5 class='description-header'><b>"+actual_downtime_duration+"</b> minutes</h5>");
