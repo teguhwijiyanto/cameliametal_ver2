@@ -94,7 +94,6 @@
             "autoWidth": false,
             "responsive": true,
         });
-<<<<<<< HEAD
     }
 
     function updateDowntimeList()
@@ -558,8 +557,6 @@
             },
         });
 
-=======
->>>>>>> e3fe6842971beb80616e77c4b3678eb36515d644
         
     });
 </script>
